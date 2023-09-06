@@ -2,33 +2,33 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LazyStockDiaryMAUI.SymbolSearchPage"
-             xmlns:controls="clr-namespace:LazyStockDiaryMAUI.Controls"
-             >
-    <Shell.SearchHandler>
-        <controls:SymbolSearchHandler Placeholder="Symbol"
-                                      x:Name="symbolSearchHandler"
-                                      ShowsResults="true">
-            <controls:SymbolSearchHandler.ItemTemplate>
-                <DataTemplate>
-                    <Grid Padding="10"
-                          ColumnDefinitions="0.1*,0.9*">
-                        <Label Grid.Column="1"
-                               Text="{Binding Code}"
-                               FontAttributes="Bold"
-                               VerticalOptions="Center" />
-                        <Label Grid.Column="2"
-                               Text="{Binding Name}"
-                               HorizontalOptions="End"
-                               VerticalOptions="Center" />
-                    </Grid>
-                </DataTemplate>
-            </controls:SymbolSearchHandler.ItemTemplate>
-        </controls:SymbolSearchHandler>
-    </Shell.SearchHandler>
+             xmlns:vm="clr-namespace:LazyStockDiaryMAUI.ViewModels"
+             Shell.NavBarIsVisible="False">
+    <ContentPage.BindingContext>
+        <vm:SymbolSearchViewModel/>
+    </ContentPage.BindingContext>
+
     <VerticalStackLayout>
-        <Label 
-            Text="Search for Stock"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Entry
+            x:Name="SearchQueryEntry"
+            Margin="50,0"
+            HorizontalOptions="FillAndExpand"
+            Completed="SearchQueryCompleted"
+            Text="{Binding SearchQuery}"
+            Placeholder="Stock"/>
+        <ListView
+            ItemTapped="SearchListItemTapped"
+            ItemsSource="{Binding SearchItemsSource}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="{Binding Code}"/>
+                            <Label Text="{Binding Name}"/>
+                        </HorizontalStackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </VerticalStackLayout>
 </ContentPage>

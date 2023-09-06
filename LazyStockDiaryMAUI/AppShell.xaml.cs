@@ -6,5 +6,6 @@ public partial class AppShell : Shell
 	{
 		InitializeComponent();
         Routing.RegisterRoute(nameof(SymbolSearchPage), typeof(SymbolSearchPage));
+        Routing.RegisterRoute(nameof(BuySymbolPage), typeof(BuySymbolPage));
     }
 }

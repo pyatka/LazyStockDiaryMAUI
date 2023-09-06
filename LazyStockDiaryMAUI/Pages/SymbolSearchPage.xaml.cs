@@ -1,4 +1,5 @@
-﻿using LazyStockDiaryMAUI.Controls;
+﻿using LazyStockDiaryMAUI.Models;
+using LazyStockDiaryMAUI.ViewModels;
 
 namespace LazyStockDiaryMAUI;
 
@@ -7,11 +8,15 @@ public partial class SymbolSearchPage : ContentPage
 	public SymbolSearchPage()
 	{
 		InitializeComponent();
-        Loaded += PageLoaded;
-	}
+    }
 
-    private void PageLoaded(object sender, EventArgs e)
+    public void SearchQueryCompleted(System.Object sender, System.EventArgs e)
     {
-        symbolSearchHandler.Focus();
+		((SymbolSearchViewModel)BindingContext).SearchQueryCompleted();
+    }
+
+    void SearchListItemTapped(System.Object sender, Microsoft.Maui.Controls.ItemTappedEventArgs e)
+    {
+        ((SymbolSearchViewModel)BindingContext).SearchListItemTapped(e.Item as SearchSymbol);
     }
 }

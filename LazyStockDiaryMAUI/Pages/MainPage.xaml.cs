@@ -9,6 +9,12 @@ public partial class MainPage : ContentPage
 		InitializeComponent();
 	}
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        Focus();
+    }
+
     async void AddSymbolClicked(System.Object sender, System.EventArgs e)
     {
         await Shell.Current.GoToAsync($"{nameof(SymbolSearchPage)}");
