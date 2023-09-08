@@ -66,6 +66,7 @@
 	  <None Remove="Extentions\" />
 	  <None Remove="ViewModels\" />
 	  <None Remove="Commands\" />
+	  <None Remove="Platforms\Android\Services\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Pages\" />
@@ -75,5 +76,11 @@
 	  <Folder Include="Extentions\" />
 	  <Folder Include="ViewModels\" />
 	  <Folder Include="Commands\" />
+	  <Folder Include="Platforms\Android\Services\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="Services\IBackgroundService.cs">
+	    <ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
+	  </Compile>
 	</ItemGroup>
 </Project>

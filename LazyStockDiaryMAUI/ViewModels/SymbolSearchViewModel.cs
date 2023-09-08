@@ -26,7 +26,7 @@ namespace LazyStockDiaryMAUI.ViewModels
 			if(SearchQuery != null)
 			{
 				SearchItemsSource.Clear();
-                var items = await((App)Application.Current).RestServiceManager.Search(SearchQuery);
+                var items = await ((App)Application.Current).RestServiceManager.Search(SearchQuery);
 				items.ForEach(i => SearchItemsSource.Add(i));
 				OnPropertyChanged(nameof(SearchItemsSource));
             }

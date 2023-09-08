@@ -2,6 +2,7 @@
 using LazyStockDiaryMAUI.Extentions;
 using LazyStockDiaryMAUI.Helpers;
 using LazyStockDiaryMAUI.Models;
+using static Android.App.DownloadManager;
 
 namespace LazyStockDiaryMAUI.Services
 {
@@ -28,6 +29,17 @@ namespace LazyStockDiaryMAUI.Services
 #else
             restHost = new Uri("");
 #endif
+        }
+
+        public async Task<Symbol> GetSymbol(string code, string exchange)
+        {
+            var uri = _restHost.Append("symbol");
+            var symbol = await _httpClient.Get<Symbol>(uri, prepareParameters(new Dictionary<string, string>
+            {
+                { "code", code },
+                { "exchange", exchange },
+            }));
+            return symbol;
         }
 
         public async Task<List<SearchSymbol>> Search(string query)

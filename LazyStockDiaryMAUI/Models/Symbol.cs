@@ -1,9 +1,16 @@
 ﻿using System;
+using SQLite;
+
 namespace LazyStockDiaryMAUI.Models
 {
 	public class Symbol
 	{
+        [PrimaryKey, AutoIncrement]
+        public int? Id { get; set; }
+
+        [Indexed]
         public string Code { get; set; }
+        [Indexed]
         public string Exchange { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
@@ -24,7 +31,9 @@ namespace LazyStockDiaryMAUI.Models
         public double? ChangeAbsolute { get; set; }
         public double? ChangePercent { get; set; }
 
+        [Indexed]
         public DateTime? DividendLastUpdate { get; set; }
+        [Indexed]
         public DateTime? EodLastUpdate { get; set; }
     }
 }
