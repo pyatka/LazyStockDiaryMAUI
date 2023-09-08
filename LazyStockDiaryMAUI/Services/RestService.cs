@@ -52,7 +52,7 @@ namespace LazyStockDiaryMAUI.Services
             return symbols;
         }
 
-        public async Task<Symbol> RegisterSymbol(RegisterSymbolData data)
+        public async Task<Symbol> RegisterSymbol(Symbol data)
         {
             var uri = _restHost.Append("symbol");
             var symbol = await _httpClient.Post<Symbol>(uri, data);

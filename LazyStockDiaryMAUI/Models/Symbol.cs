@@ -3,8 +3,8 @@ using SQLite;
 
 namespace LazyStockDiaryMAUI.Models
 {
-	public class Symbol
-	{
+    public class Symbol
+    {
         [PrimaryKey, AutoIncrement]
         public int? Id { get; set; }
 
@@ -35,6 +35,10 @@ namespace LazyStockDiaryMAUI.Models
         public DateTime? DividendLastUpdate { get; set; }
         [Indexed]
         public DateTime? EodLastUpdate { get; set; }
+
+        public int? Quantity { get; set; }
+        public double? Price { get; set; }
+        public DateTime? FirstBuyDate { get; set; }
     }
 }
 

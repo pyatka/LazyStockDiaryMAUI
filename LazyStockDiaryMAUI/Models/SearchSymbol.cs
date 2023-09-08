@@ -13,9 +13,9 @@ namespace LazyStockDiaryMAUI.Models
         public double? PreviousClose { get; set; }
         public DateTime? PreviousCloseDate { get; set; }
 
-        public RegisterSymbolData ToRegisterSymbolData()
+        public Symbol ToSymbol()
         {
-            RegisterSymbolData result = new RegisterSymbolData();
+            Symbol result = new Symbol();
             result.Code = Code;
             result.Exchange = Exchange;
             result.Name = Name;
@@ -25,7 +25,6 @@ namespace LazyStockDiaryMAUI.Models
             result.ISIN = ISIN;
             result.PreviousClose = PreviousClose;
             result.PreviousCloseDate = PreviousCloseDate;
-            result.Date = DateTime.Now;
             return result;
         }
     }

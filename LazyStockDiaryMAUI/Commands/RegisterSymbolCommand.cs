@@ -13,7 +13,7 @@ namespace LazyStockDiaryMAUI.Commands
         }
         public async void Execute(object parameter)
         {
-            var symbol = parameter as RegisterSymbolData;
+            var symbol = parameter as Symbol;
             if(symbol.Quantity > 0)
             {
                 var symbolForRegistration = await ((App)Application.Current).RestServiceManager.RegisterSymbol(symbol);

@@ -8,7 +8,7 @@ namespace LazyStockDiaryMAUI.ViewModels
 {
 	public class BuySymbolViewModel : BaseViewModel, IQueryAttributable
     {
-        public RegisterSymbolData Symbol { get; set; }
+        public Symbol Symbol { get; set; }
         public ICommand BuySymbol { get; set; }
 
         public BuySymbolViewModel()
@@ -20,7 +20,7 @@ namespace LazyStockDiaryMAUI.ViewModels
         {
             string dataKey = HttpUtility.UrlDecode(query["dataKey"].ToString());
             SearchSymbol searchSymbol = ((App)Application.Current).DataExchangeServiceManager.Pop(dataKey) as SearchSymbol;
-            Symbol = searchSymbol.ToRegisterSymbolData();
+            Symbol = searchSymbol.ToSymbol();
             OnPropertyChanged(nameof(Symbol));
         }
     }
