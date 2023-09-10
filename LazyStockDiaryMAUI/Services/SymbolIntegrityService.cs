@@ -46,7 +46,8 @@ namespace LazyStockDiaryMAUI.Services
 				return existedSymbol;
 			} else
 			{
-				symbol.Id = await _db.RegisterSymbol(symbol);
+                symbol.FirstBuyDate = DateTime.Now;
+                symbol.Id = await _db.RegisterSymbol(symbol);
                 SymbolAddOperation(symbol, operation);
 				return symbol;
             }
