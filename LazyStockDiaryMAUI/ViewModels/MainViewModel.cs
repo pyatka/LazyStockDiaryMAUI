@@ -21,7 +21,7 @@ namespace LazyStockDiaryMAUI.ViewModels
             var service = ((App)Application.Current).MainPage.Handler.MauiContext.Services.GetService<IBackgroundService>();
             foreach(Symbol s in symbols)
 			{
-				Symbols.Add(s);
+                Symbols.Add(s);
 				service.UpdateSymbol(s);
 			}
             OnPropertyChanged(nameof(Symbols));

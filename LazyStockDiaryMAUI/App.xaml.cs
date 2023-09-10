@@ -8,6 +8,7 @@ public partial class App : Application
 	public RestService RestServiceManager;
 	public DataExchangeService DataExchangeServiceManager;
 	public DatabaseService DatabaseServiceManager;
+	public SymbolIntegrityService SymbolIntegrityServiceManager;
 
 	public App()
 	{
@@ -16,6 +17,7 @@ public partial class App : Application
 		RestServiceManager = new RestService();
 		DataExchangeServiceManager = new DataExchangeService();
 		DatabaseServiceManager = new DatabaseService();
+		SymbolIntegrityServiceManager = new SymbolIntegrityService();
 
         MainPage = new AppShell();
 	}
