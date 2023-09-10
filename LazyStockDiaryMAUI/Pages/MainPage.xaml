@@ -13,14 +13,91 @@
                  Clicked="AddSymbolClicked"/>
     </ContentPage.ToolbarItems>
 
-    <ListView ItemsSource="{Binding Symbols}">
+    <ListView ItemsSource="{Binding Symbols}"
+              HasUnevenRows="True">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
-                    <HorizontalStackLayout Spacing="10">
-                        <Label Text="{Binding Code}"/>
-                        <Label Text="{Binding Name}"/>
-                    </HorizontalStackLayout>
+                    <Grid
+                        Padding="3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Text="{Binding Name}"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            FontSize="Micro"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"/>
+                        <Label Text="{Binding PreviousCloseDate, StringFormat='{}{0:dd MMMM yy}'}"
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            Grid.ColumnSpan="2"
+                            FontSize="Micro"
+                            VerticalOptions="Center"
+                            HorizontalOptions="End"/>
+
+                        <Label Text="{Binding Code}"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="1"
+                            FontSize="Title"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"/>
+                        <Grid
+                            Padding="2"
+                            Grid.Row="1"
+                            Grid.Column="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Text="{Binding ChangeAbsolute}"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                FontSize="Micro"
+                                VerticalOptions="Center"
+                                HorizontalOptions="End"/>
+                            <Label Text="{Binding ChangePercent, StringFormat=\{0\}%}"
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                FontSize="Micro"
+                                VerticalOptions="Center"
+                                HorizontalOptions="End"/>
+                        </Grid>
+                        <Label Text="{Binding Close}"
+                            Grid.Row="1"
+                            Grid.Column="3"
+                            FontSize="Large"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"/>
+
+                        <Label Text="{Binding Exchange}"
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            FontSize="Micro"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"/>
+                        <Label Text="{Binding Currency}"
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            FontSize="Micro"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"/>
+                    </Grid>
                 </ViewCell>
             </DataTemplate>
         </ListView.ItemTemplate>
