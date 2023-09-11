@@ -31,7 +31,7 @@
                    Placeholder="Price"
                    Text="{Binding Symbol.Price}"/>
             <DatePicker
-                Date="{Binding Symbol.Date}"/>
+                Date="{Binding Symbol.OperationDate}"/>
             <Button Text="Buy"
                     Command="{Binding BuySymbol}"
                     CommandParameter="{Binding Symbol}"

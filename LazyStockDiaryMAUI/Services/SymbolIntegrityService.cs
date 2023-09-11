@@ -12,7 +12,12 @@ namespace LazyStockDiaryMAUI.Services
 			_db = ((App)Application.Current).DatabaseServiceManager;
         }
 
-		public Task<bool> SymbolExists(Symbol symbol)
+		public async Task UpdateSymbolDividend(Symbol symbol, List<Dividend> dividends)
+		{
+			await _db.UpdateSymbolDividend(symbol, dividends);
+		}
+
+        public Task<bool> SymbolExists(Symbol symbol)
 		{
 			return _db.SymbolExists(symbol.Code, symbol.Exchange);
 		}
@@ -20,6 +25,11 @@ namespace LazyStockDiaryMAUI.Services
 		public bool SymbolAddOperation(Symbol symbol, Operation operation)
 		{
 			operation.SymbolId = symbol.Id.Value;
+			if (!symbol.OperationDate.HasValue)
+			{
+				symbol.OperationDate = DateTime.Now;
+            }
+			operation.Date = symbol.OperationDate.Value;
 			_db.PutOperation(operation);
 			return true;
 		}
@@ -42,11 +52,19 @@ namespace LazyStockDiaryMAUI.Services
 				existedSymbol.Price = newPrice;
 				existedSymbol.Quantity = newQuantity;
 
+				if(symbol.OperationDate < symbol.FirstBuyDate)
+				{
+                    symbol.FirstBuyDate = symbol.OperationDate;
+					symbol.DividendLastUpdate = null;
+                }
+
 				await _db.UpdateSymbolData(existedSymbol);
 				return existedSymbol;
 			} else
 			{
-                symbol.FirstBuyDate = DateTime.Now;
+				symbol.FirstBuyDate = symbol.OperationDate;
+                symbol.DividendLastUpdate = null;
+                symbol.EodLastUpdate = null;
                 symbol.Id = await _db.RegisterSymbol(symbol);
                 SymbolAddOperation(symbol, operation);
 				return symbol;

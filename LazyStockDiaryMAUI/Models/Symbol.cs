@@ -38,6 +38,8 @@ namespace LazyStockDiaryMAUI.Models
 
         public int? Quantity { get; set; }
         public double? Price { get; set; }
+        public DateTime? OperationDate { get; set; }
+
         public DateTime? FirstBuyDate { get; set; }
     }
 }

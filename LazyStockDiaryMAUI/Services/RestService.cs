@@ -1,4 +1,5 @@
 ﻿using System;
+using Java.Util.Concurrent;
 using LazyStockDiaryMAUI.Extentions;
 using LazyStockDiaryMAUI.Helpers;
 using LazyStockDiaryMAUI.Models;
@@ -30,6 +31,19 @@ namespace LazyStockDiaryMAUI.Services
             restHost = new Uri("");
 #endif
         }
+
+        public async Task<List<Dividend>> GetSymbolDividend(Symbol symbol,
+                                                             DateTime startDate)
+        {
+            var uri = _restHost.Append("dividend");
+            var dividends = await _httpClient.Get<List<Dividend>>(uri, prepareParameters(new Dictionary<string, string>
+            {
+                { "code", symbol.Code },
+                { "exchange", symbol.Exchange },
+                { "startDate", startDate.ToString() },
+            }));
+            return dividends;
+        } 
 
         public async Task<Symbol> GetSymbol(string code, string exchange)
         {

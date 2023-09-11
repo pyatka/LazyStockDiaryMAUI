@@ -25,7 +25,21 @@ namespace LazyStockDiaryMAUI.Services
         private async Task createTables()
         {
             await Database.CreateTableAsync<Symbol>();
-            await Database.CreateTableAsync<Operation>(); 
+            await Database.CreateTableAsync<Operation>();
+            await Database.CreateTableAsync<Dividend>();
+        }
+
+        public async Task UpdateSymbolDividend(Symbol symbol, List<Dividend> dividends)
+        {
+            var symbolDividendQuery = Database.Table<Dividend>()
+                                              .Where(d => d.Code == symbol.Code
+                                                       && d.Exchange == symbol.Exchange);
+            await symbolDividendQuery.DeleteAsync();
+            await Database.InsertAllAsync(dividends);
+
+            var dbSymbol = await GetSymbol(symbol.Code, symbol.Exchange);
+            dbSymbol.DividendLastUpdate = DateTime.Now;
+            await Database.UpdateAsync(dbSymbol);
         }
 
         public async Task<List<Operation>> GetSymbolOperations(Symbol symbol)

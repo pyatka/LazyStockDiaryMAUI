@@ -19,6 +19,7 @@ namespace LazyStockDiaryMAUI.Commands
                 var serverRegistredSymbol = await ((App)Application.Current).RestServiceManager.RegisterSymbol(symbol);
                 serverRegistredSymbol.Price = symbol.Price;
                 serverRegistredSymbol.Quantity = symbol.Quantity;
+                serverRegistredSymbol.OperationDate = symbol.OperationDate;
                 await ((App)Application.Current).SymbolIntegrityServiceManager.BuySymbol(serverRegistredSymbol);
             }
             await Shell.Current.GoToAsync($"//{nameof(MainPage)}");

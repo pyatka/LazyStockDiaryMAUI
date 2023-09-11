@@ -25,4 +25,3 @@ namespace LazyStockDiaryMAUI.ViewModels
         }
     }
 }
-

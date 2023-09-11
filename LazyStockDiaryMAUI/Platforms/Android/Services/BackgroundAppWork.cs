@@ -13,12 +13,12 @@ namespace LazyStockDiaryMAUI.Platforms.Android.Services
     [Service]
     public class BackgroundAppWork : Service, IBackgroundService
     {
-        private DatabaseService databaseService;
+        private SymbolIntegrityService symbolIntegrityService;
         private RestService restService;
 
         public BackgroundAppWork()
         {
-            databaseService = new DatabaseService();
+            symbolIntegrityService = new SymbolIntegrityService();
             restService = new RestService();
         }
 
@@ -46,11 +46,17 @@ namespace LazyStockDiaryMAUI.Platforms.Android.Services
 
         private async void updateSymbolAction(Symbol symbol)
         {
-            var serverSymbol = await restService.GetSymbol(symbol.Code, symbol.Exchange);
-            if (symbol.EodLastUpdate == null || serverSymbol.EodLastUpdate > symbol.EodLastUpdate)
+            if(symbol.DividendLastUpdate == null && symbol.FirstBuyDate.HasValue)
             {
-                await databaseService.UpdateSymbolData(serverSymbol, symbol.Id);
+                var div = await restService.GetSymbolDividend(symbol, symbol.FirstBuyDate.Value);
+                await symbolIntegrityService.UpdateSymbolDividend(symbol, div);
             }
+
+            var serverSymbol = await restService.GetSymbol(symbol.Code, symbol.Exchange);
+            //if (symbol.EodLastUpdate == null || serverSymbol.EodLastUpdate > symbol.EodLastUpdate)
+            //{
+            //    await databaseService.UpdateSymbolData(serverSymbol, symbol.Id);
+            //}
         }
 
         public void UpdateSymbol(Symbol symbol)
