@@ -12,6 +12,11 @@ namespace LazyStockDiaryMAUI.Services
 			_db = ((App)Application.Current).DatabaseServiceManager;
         }
 
+		public async Task<int> UpdateSymbol(Symbol symbol)
+		{
+			return await _db.UpdateSymbol(symbol);
+		}
+
 		public async Task UpdateSymbolDividend(Symbol symbol, List<Dividend> dividends)
 		{
 			await _db.UpdateSymbolDividend(symbol, dividends);
@@ -58,7 +63,7 @@ namespace LazyStockDiaryMAUI.Services
 					symbol.DividendLastUpdate = null;
                 }
 
-				await _db.UpdateSymbolData(existedSymbol);
+				await _db.UpdateSymbol(existedSymbol);
 				return existedSymbol;
 			} else
 			{

@@ -29,6 +29,11 @@ namespace LazyStockDiaryMAUI.Services
             await Database.CreateTableAsync<Dividend>();
         }
 
+        public async Task<int> UpdateSymbol(Symbol symbol)
+        {
+            return await Database.UpdateAsync(symbol);
+        }
+
         public async Task UpdateSymbolDividend(Symbol symbol, List<Dividend> dividends)
         {
             var symbolDividendQuery = Database.Table<Dividend>()
@@ -56,16 +61,6 @@ namespace LazyStockDiaryMAUI.Services
         public async void PutOperation(Operation operation)
         {
             await Database.InsertAsync(operation);
-        }
-
-        public async Task<int> UpdateSymbolData(Symbol data, int? Id = null)
-        {
-            if(Id != null)
-            {
-                data.Id = Id;
-            }
-
-            return await Database.UpdateAsync(data);
         }
 
         public async Task<int> RegisterSymbol(Symbol symbol)

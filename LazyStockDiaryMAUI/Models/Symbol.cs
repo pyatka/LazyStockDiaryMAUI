@@ -41,6 +41,29 @@ namespace LazyStockDiaryMAUI.Models
         public DateTime? OperationDate { get; set; }
 
         public DateTime? FirstBuyDate { get; set; }
+
+        [Ignore]
+        public double PotentialRevenue {
+            get
+            {
+                return Quantity.Value * Price.Value;
+            }
+        }
+
+        public void UpdateValues(Symbol dataSymbol)
+        {
+            PreviousClose = dataSymbol.PreviousClose;
+            PreviousCloseDate = dataSymbol.PreviousCloseDate;
+
+            Open = dataSymbol.Open;
+            Close = dataSymbol.Close;
+            High = dataSymbol.High;
+            Low = dataSymbol.Low;
+            Volume = dataSymbol.Volume;
+
+            ChangeAbsolute = dataSymbol.ChangeAbsolute;
+            ChangePercent = dataSymbol.ChangePercent;
+        }
     }
 }
 

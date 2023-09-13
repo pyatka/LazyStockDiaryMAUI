@@ -53,10 +53,8 @@ namespace LazyStockDiaryMAUI.Platforms.Android.Services
             }
 
             var serverSymbol = await restService.GetSymbol(symbol.Code, symbol.Exchange);
-            //if (symbol.EodLastUpdate == null || serverSymbol.EodLastUpdate > symbol.EodLastUpdate)
-            //{
-            //    await databaseService.UpdateSymbolData(serverSymbol, symbol.Id);
-            //}
+            symbol.UpdateValues(serverSymbol);
+            await symbolIntegrityService.UpdateSymbol(symbol);
         }
 
         public void UpdateSymbol(Symbol symbol)
