@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LazyStockDiaryMAUI.SymbolDetailsPage"
+             xmlns:controls="clr-namespace:LazyStockDiaryMAUI.Controls"
+             xmlns:vm="clr-namespace:LazyStockDiaryMAUI.ViewModels">
+    <ContentPage.BindingContext>
+        <vm:SymbolDetailsViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{Binding Symbol.Name}"/>
+        <ToolbarItem Text="Sell"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="BuyOperationTemplate">
+                <ViewCell>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Text="Buy"
+                            FontSize="Small"
+                            FontAttributes="Bold"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"/>
+                        <Label Text="{Binding Date, StringFormat='{}{0:dd MMMM yy}'}"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            FontSize="Small"
+                            VerticalOptions="Center"
+                            HorizontalOptions="End"/>
+                        <Label
+                            Grid.Column="1"
+                            Grid.Row="1"
+                            Text="{Binding Price}"
+                            FontSize="Large"
+                            FontAttributes="Bold"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"/>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="SellOperationTemplate">
+                <ViewCell>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Text="Sell"
+                            FontSize="Small"
+                            FontAttributes="Bold"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"/>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ResourceDictionary>
+        <controls:OperationTemplateSelector x:Key="OperationTemplateSelector"
+                BuyOperationTemplate ="{StaticResource BuyOperationTemplate}"
+                SellOperationTemplate="{StaticResource SellOperationTemplate}"/>
+    </ContentPage.Resources>
+
+    <ListView
+        HasUnevenRows="True"
+        SelectionMode="None"
+        ItemTemplate="{StaticResource OperationTemplateSelector}"
+        ItemsSource="{Binding Operations}">
+    </ListView>
+</ContentPage>

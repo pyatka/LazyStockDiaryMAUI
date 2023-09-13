@@ -14,7 +14,8 @@
     </ContentPage.ToolbarItems>
 
     <ListView ItemsSource="{Binding Symbols}"
-              HasUnevenRows="True">
+              HasUnevenRows="True"
+              ItemTapped="SymbolTapped">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>

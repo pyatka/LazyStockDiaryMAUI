@@ -12,6 +12,11 @@ namespace LazyStockDiaryMAUI.Services
 			_db = ((App)Application.Current).DatabaseServiceManager;
         }
 
+		public async Task<List<Operation>> GetSymbolOperations(Symbol symbol)
+		{
+			return await _db.GetSymbolOperations(symbol.Id.Value);
+		}
+
 		public async Task<int> UpdateSymbol(Symbol symbol)
 		{
 			return await _db.UpdateSymbol(symbol);

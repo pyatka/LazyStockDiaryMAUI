@@ -67,6 +67,7 @@
 	  <None Remove="ViewModels\" />
 	  <None Remove="Commands\" />
 	  <None Remove="Platforms\Android\Services\" />
+	  <None Remove="Controls\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Pages\" />
@@ -77,6 +78,7 @@
 	  <Folder Include="ViewModels\" />
 	  <Folder Include="Commands\" />
 	  <Folder Include="Platforms\Android\Services\" />
+	  <Folder Include="Controls\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Compile Update="Services\IBackgroundService.cs">

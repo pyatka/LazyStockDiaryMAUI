@@ -1,4 +1,5 @@
 ﻿using System.Timers;
+using LazyStockDiaryMAUI.Models;
 using LazyStockDiaryMAUI.Platforms;
 using LazyStockDiaryMAUI.ViewModels;
 using static System.Net.Mime.MediaTypeNames;
@@ -25,6 +26,9 @@ public partial class MainPage : ContentPage
     {
         await Shell.Current.GoToAsync($"{nameof(SymbolSearchPage)}");
     }
+
+    public void SymbolTapped(System.Object sender, ItemTappedEventArgs e)
+    {
+        (BindingContext as MainViewModel).SymbolTapped(e.Item as Symbol);
+    }
 }
-
-

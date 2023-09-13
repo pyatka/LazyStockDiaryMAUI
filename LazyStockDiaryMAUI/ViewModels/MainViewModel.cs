@@ -14,6 +14,12 @@ namespace LazyStockDiaryMAUI.ViewModels
 			Symbols = new ObservableCollection<Symbol>();
 		}
 
+        public async void SymbolTapped(Symbol symbol)
+        {
+            string key = ((App)Application.Current).DataExchangeServiceManager.Put(symbol);
+            await Shell.Current.GoToAsync($"{nameof(SymbolDetailsPage)}?dataKey={key}");
+        }
+
         public async void UpdateSymbols()
 		{
 			Symbols.Clear();

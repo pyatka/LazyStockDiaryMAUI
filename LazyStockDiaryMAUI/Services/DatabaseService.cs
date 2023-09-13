@@ -29,6 +29,14 @@ namespace LazyStockDiaryMAUI.Services
             await Database.CreateTableAsync<Dividend>();
         }
 
+        public async Task<List<Operation>> GetSymbolOperations(int symbolId)
+        {
+            return await Database.Table<Operation>()
+                                 .Where(o => o.SymbolId == symbolId)
+                                 .OrderByDescending(o => o.Date)
+                                 .ToListAsync();
+        }
+
         public async Task<int> UpdateSymbol(Symbol symbol)
         {
             return await Database.UpdateAsync(symbol);
