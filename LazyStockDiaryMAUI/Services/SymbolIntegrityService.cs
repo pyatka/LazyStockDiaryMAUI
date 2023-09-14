@@ -47,20 +47,20 @@ namespace LazyStockDiaryMAUI.Services
         public async Task<bool> SellSymbol(OperationInfo info)
 		{
             var symbolExists = await SymbolExists(info.Symbol);
-			//if (symbolExists)
-			//{
-			//	if(info.Quantity > info.Symbol.Quantity)
-			//	{
-			//		info.Quantity = info.Symbol.Quantity;
-   //             }
+			if (symbolExists)
+			{
+				if (info.Quantity > info.Symbol.Quantity)
+				{
+					info.Quantity = info.Symbol.Quantity;
+				}
 
-   //             Operation operation = Operation.CreateOperation(OperationType.Sell);
-   //             operation.Price = info.Price;
-   //             operation.Quantity = info.Quantity;
-   //             SymbolAddOperation(info.Symbol, operation);
-   //         }
+				Operation operation = Operation.CreateOperation(OperationType.Sell);
+				operation.Price = info.Price;
+				operation.Quantity = info.Quantity;
+				SymbolAddOperation(info, operation);
+			}
 
-            return true;
+			return true;
 		}
 
 

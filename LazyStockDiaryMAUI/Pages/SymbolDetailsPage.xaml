@@ -57,8 +57,10 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Label
@@ -69,6 +71,20 @@
                             FontAttributes="Bold"
                             VerticalOptions="Center"
                             HorizontalOptions="Start"/>
+                        <Label Text="{Binding Date, StringFormat='{}{0:dd MMMM yy}'}"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            FontSize="Small"
+                            VerticalOptions="Center"
+                            HorizontalOptions="End"/>
+                        <Label
+                            Grid.Column="1"
+                            Grid.Row="1"
+                            Text="{Binding Price}"
+                            FontSize="Large"
+                            FontAttributes="Bold"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"/>
                     </Grid>
                 </ViewCell>
             </DataTemplate>

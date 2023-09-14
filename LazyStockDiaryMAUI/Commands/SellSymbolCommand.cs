@@ -14,7 +14,8 @@ namespace LazyStockDiaryMAUI.Commands
         public async void Execute(object parameter)
         {
             var operationInfo = parameter as OperationInfo;
-            
+            await ((App)Application.Current).SymbolIntegrityServiceManager.SellSymbol(operationInfo);
+            await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
         }
     }
 }
