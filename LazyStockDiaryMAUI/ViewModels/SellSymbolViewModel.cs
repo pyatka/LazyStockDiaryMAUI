@@ -6,22 +6,21 @@ using LazyStockDiaryMAUI.Models;
 
 namespace LazyStockDiaryMAUI.ViewModels
 {
-	public class BuySymbolViewModel : BaseViewModel, IQueryAttributable
+	public class SellSymbolViewModel : BaseViewModel, IQueryAttributable
     {
         public OperationInfo OperationInfo { get; set; }
-        public ICommand BuySymbol { get; set; }
+        public ICommand SellSymbol { get; set; }
 
-        public BuySymbolViewModel()
-        {
+        public SellSymbolViewModel()
+		{
+            SellSymbol = new SellSymbolCommand();
             OperationInfo = new OperationInfo();
-            BuySymbol = new BuySymbolCommand();
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             string dataKey = HttpUtility.UrlDecode(query["dataKey"].ToString());
-            SearchSymbol searchSymbol = ((App)Application.Current).DataExchangeServiceManager.Pop(dataKey) as SearchSymbol;
-            OperationInfo.Symbol = searchSymbol.ToSymbol();
+            OperationInfo.Symbol = ((App)Application.Current).DataExchangeServiceManager.Pop(dataKey) as Symbol;
             OnPropertyChanged(nameof(OperationInfo));
         }
     }

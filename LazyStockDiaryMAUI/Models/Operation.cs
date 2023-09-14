@@ -32,5 +32,12 @@ namespace LazyStockDiaryMAUI.Models
 			operation.Type = ((int)type);
 			return operation;
         }
+
+		public void UpdateInfo(OperationInfo operationInfo)
+		{
+			Date = operationInfo.Date.Value;
+			Price = operationInfo.Price;
+			Quantity = operationInfo.Quantity;
+		}
     }
 }

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LazyStockDiaryMAUI.SellSymbolPage"
+             xmlns:vm="clr-namespace:LazyStockDiaryMAUI.ViewModels">
+    <ContentPage.BindingContext>
+        <vm:SellSymbolViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{Binding OperationInfo.Symbol.Name}"/>
+    </ContentPage.ToolbarItems>
+
+    <StackLayout>
+        <Entry x:Name="Quantity"
+                HorizontalOptions="FillAndExpand"
+                Keyboard="Numeric"
+                Placeholder="Quantity"
+                Text="{Binding OperationInfo.Quantity}"/>
+        <Entry x:Name="Price"
+                HorizontalOptions="FillAndExpand"
+                Keyboard="Numeric"
+                Placeholder="Price"
+                Text="{Binding OperationInfo.Price}"/>
+        <DatePicker
+            Date="{Binding OperationInfo.Date}"/>
+        <Button Text="Sell"
+                Command="{Binding SellSymbol}"
+                CommandParameter="{Binding OperationInfo}"
+                HorizontalOptions="CenterAndExpand"/>
+    </StackLayout>
+</ContentPage>

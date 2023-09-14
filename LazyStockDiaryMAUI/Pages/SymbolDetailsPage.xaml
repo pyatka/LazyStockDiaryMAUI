@@ -10,7 +10,8 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="{Binding Symbol.Name}"/>
-        <ToolbarItem Text="Sell"/>
+        <ToolbarItem Text="Sell"
+                     Clicked="SellTapped"/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Resources>

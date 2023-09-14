@@ -13,7 +13,7 @@ namespace LazyStockDiaryMAUI.Commands
         }
         public async void Execute(object parameter)
         {
-            var symbol = parameter as Symbol;
+            var operationInfo = parameter as OperationInfo;
             
         }
     }

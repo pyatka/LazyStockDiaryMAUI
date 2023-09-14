@@ -10,13 +10,13 @@
     <ContentPage.Content>
         <StackLayout>
             <StackLayout Orientation="Horizontal">
-                <Label Text="{Binding Symbol.Name}"
+                <Label Text="{Binding OperationInfo.Symbol.Name}"
                     Padding="10,10,10,10"
                     HorizontalOptions="CenterAndExpand" />
-                <Label Text="{Binding Symbol.Code}"
+                <Label Text="{Binding OperationInfo.Symbol.Code}"
                     Padding="10,10,10,10"
                     HorizontalOptions="CenterAndExpand" />
-                <Label Text="{Binding Symbol.Currency}"
+                <Label Text="{Binding OperationInfo.Symbol.Currency}"
                     Padding="10,10,10,10"
                     HorizontalOptions="CenterAndExpand" />
             </StackLayout>
@@ -24,17 +24,17 @@
                    HorizontalOptions="FillAndExpand"
                    Keyboard="Numeric"
                    Placeholder="Quantity"
-                   Text="{Binding Symbol.Quantity}"/>
+                   Text="{Binding OperationInfo.Quantity}"/>
             <Entry x:Name="Price"
                    HorizontalOptions="FillAndExpand"
                    Keyboard="Numeric"
                    Placeholder="Price"
-                   Text="{Binding Symbol.Price}"/>
+                   Text="{Binding OperationInfo.Price}"/>
             <DatePicker
-                Date="{Binding Symbol.OperationDate}"/>
+                Date="{Binding OperationInfo.Date}"/>
             <Button Text="Buy"
                     Command="{Binding BuySymbol}"
-                    CommandParameter="{Binding Symbol}"
+                    CommandParameter="{Binding OperationInfo}"
                     HorizontalOptions="CenterAndExpand"/>
         </StackLayout>
     </ContentPage.Content>

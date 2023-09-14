@@ -68,7 +68,7 @@ namespace LazyStockDiaryMAUI.Services
 
         public async void PutOperation(Operation operation)
         {
-            await Database.InsertAsync(operation);
+            var a = await Database.InsertAsync(operation);
         }
 
         public async Task<int> RegisterSymbol(Symbol symbol)

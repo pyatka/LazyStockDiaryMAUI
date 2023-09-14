@@ -9,4 +9,9 @@ public partial class SymbolDetailsPage : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    void SellTapped(Object sender, EventArgs e)
+    {
+		(BindingContext as SymbolDetailsViewModel).SellSymbol();
+    }
 }

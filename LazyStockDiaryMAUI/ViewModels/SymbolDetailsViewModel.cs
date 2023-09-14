@@ -11,13 +11,17 @@ namespace LazyStockDiaryMAUI.ViewModels
     {
         public Symbol Symbol { get; set; }
         public ObservableCollection<Operation> Operations { get; set; }
-        public ICommand SellSymbol { get; set; }
 
         public SymbolDetailsViewModel()
 		{
-            SellSymbol = new SellSymbolCommand();
             Operations = new ObservableCollection<Operation>();
 		}
+
+        public async void SellSymbol()
+        {
+            string key = ((App)Application.Current).DataExchangeServiceManager.Put(Symbol);
+            await Shell.Current.GoToAsync($"{nameof(SellSymbolPage)}?dataKey={key}");
+        }
 
         public async void UpdateOperationsList()
         {
