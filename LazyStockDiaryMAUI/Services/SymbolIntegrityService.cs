@@ -58,7 +58,10 @@ namespace LazyStockDiaryMAUI.Services
 				operation.Price = info.Price;
 				operation.Quantity = info.Quantity;
 				SymbolAddOperation(info, operation);
-			}
+
+				info.Symbol.Quantity -= info.Quantity;
+                await _db.UpdateSymbol(info.Symbol);
+            }
 
 			return true;
 		}
@@ -96,6 +99,8 @@ namespace LazyStockDiaryMAUI.Services
                 operationInfo.Symbol.DividendLastUpdate = null;
                 operationInfo.Symbol.EodLastUpdate = null;
 				operationInfo.Symbol.Id = null;
+				operationInfo.Symbol.Price = operationInfo.Price;
+				operationInfo.Symbol.Quantity = operationInfo.Quantity;
                 operationInfo.Symbol.Id = await _db.RegisterSymbol(operationInfo.Symbol);
                 SymbolAddOperation(operationInfo, operation);
 				return operationInfo.Symbol;

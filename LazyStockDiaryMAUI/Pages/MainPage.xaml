@@ -66,13 +66,13 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Label Text="{Binding ChangeAbsolute}"
+                            <Label Text="{Binding ChangeAbsolute, StringFormat={}{0:N2}}"
                                 Grid.Row="0"
                                 Grid.Column="1"
                                 FontSize="Micro"
                                 VerticalOptions="Center"
                                 HorizontalOptions="End"/>
-                            <Label Text="{Binding ChangePercent, StringFormat=\{0\}%}"
+                            <Label Text="{Binding ChangePercent, StringFormat=\{0:N2\}%}"
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 FontSize="Micro"
@@ -95,6 +95,12 @@
                         <Label Text="{Binding Currency}"
                             Grid.Row="2"
                             Grid.Column="1"
+                            FontSize="Micro"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"/>
+                        <Label Text="{Binding PotentialRevenue, StringFormat={}{0:N2}}"
+                            Grid.Row="2"
+                            Grid.Column="3"
                             FontSize="Micro"
                             VerticalOptions="Center"
                             HorizontalOptions="Center"/>

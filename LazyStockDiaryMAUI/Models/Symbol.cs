@@ -41,6 +41,21 @@ namespace LazyStockDiaryMAUI.Models
 
         public DateTime? FirstBuyDate { get; set; }
 
+        [Ignore]
+        public double PotentialRevenue
+        {
+            get
+            {
+                if(Quantity.HasValue && Price.HasValue)
+                {
+                    return Quantity.Value * Price.Value;
+                } else
+                {
+                    return 0;
+                }
+            }
+        }
+
         public void UpdateValues(Symbol dataSymbol)
         {
             PreviousClose = dataSymbol.PreviousClose;
