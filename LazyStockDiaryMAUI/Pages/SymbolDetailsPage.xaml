@@ -154,6 +154,12 @@
             FontSize="Medium"
             Text="{Binding Symbol.PotentialRevenue, StringFormat=\{0:N2\}}"
             />
+         <Label
+            Grid.Column="2"
+            Grid.Row="1"
+            FontSize="Medium"
+            Text="{Binding Symbol.DividendRevenue, StringFormat=\{0:N2\}}"
+            />
 
         <ListView
             Grid.ColumnSpan="4"

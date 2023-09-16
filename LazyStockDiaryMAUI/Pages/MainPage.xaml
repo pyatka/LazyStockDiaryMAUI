@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LazyStockDiaryMAUI.MainPage"
+             xmlns:controls="clr-namespace:LazyStockDiaryMAUI.Controls"
              xmlns:vm="clr-namespace:LazyStockDiaryMAUI.ViewModels">
     <ContentPage.BindingContext>
         <vm:MainViewModel/>
@@ -67,13 +68,13 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Label Text="{Binding ChangeAbsolute, StringFormat=\{0:N2\}}"
+                            <controls:FinancialLabel Value="{Binding ChangeAbsolute}"
                                 Grid.Row="0"
                                 Grid.Column="1"
                                 FontSize="Micro"
                                 VerticalOptions="Center"
                                 HorizontalOptions="End"/>
-                            <Label Text="{Binding ChangePercent, StringFormat=\{0:N2\}%}"
+                            <controls:FinancialLabel Value="{Binding ChangePercent}"
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 FontSize="Micro"
@@ -105,7 +106,7 @@
                             FontSize="Micro"
                             VerticalOptions="Center"
                             HorizontalOptions="Center"/>
-                        <Label Text="{Binding PotentialRevenue, StringFormat=\{0:N2\}}"
+                        <controls:FinancialLabel Value="{Binding PotentialRevenue}"
                             Grid.Row="2"
                             Grid.Column="3"
                             FontSize="Micro"
