@@ -15,6 +15,7 @@
 
     <ListView ItemsSource="{Binding Symbols}"
               HasUnevenRows="True"
+              SelectionMode="None"
               ItemTapped="SymbolTapped">
         <ListView.ItemTemplate>
             <DataTemplate>

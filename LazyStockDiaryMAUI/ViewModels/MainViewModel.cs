@@ -22,14 +22,18 @@ namespace LazyStockDiaryMAUI.ViewModels
 
         public async void UpdateSymbols()
 		{
-			Symbols.Clear();
+			if(Symbols.Count > 0)
+			{
+                await Task.Delay(1000);
+            }
+
 			var symbols = await ((App)Application.Current).DatabaseServiceManager.GetSymbols();
             var service = ((App)Application.Current).MainPage.Handler.MauiContext.Services.GetService<IBackgroundService>();
-            foreach(Symbol s in symbols)
-			{
-                Symbols.Add(s);
-				service.UpdateSymbol(s);
-			}
+            Symbols = new ObservableCollection<Symbol>(symbols);
+            foreach (Symbol s in symbols)
+            {
+                service.UpdateSymbol(s);
+            }
             OnPropertyChanged(nameof(Symbols));
         }
 	}

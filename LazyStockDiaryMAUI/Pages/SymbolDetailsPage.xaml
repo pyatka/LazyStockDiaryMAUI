@@ -117,10 +117,52 @@
                 SellOperationTemplate="{StaticResource SellOperationTemplate}"/>
     </ContentPage.Resources>
 
-    <ListView
-        HasUnevenRows="True"
-        SelectionMode="None"
-        ItemTemplate="{StaticResource OperationTemplateSelector}"
-        ItemsSource="{Binding Operations}">
-    </ListView>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Label
+            Grid.Column="0"
+            Grid.Row="0"
+            FontSize="Large"
+            Text="{Binding Symbol.Code}"
+            />
+        <Label
+            Grid.Column="1"
+            Grid.Row="0"
+            FontSize="Large"
+            Text="{Binding Symbol.Exchange}"
+            />
+        <Label
+            Grid.Column="2"
+            Grid.Row="0"
+            FontSize="Large"
+            Text="{Binding Symbol.Currency}"
+            />
+
+         <Label
+            Grid.Column="0"
+            Grid.Row="1"
+            FontSize="Medium"
+            Text="{Binding Symbol.PotentialRevenue, StringFormat=\{0:N2\}}"
+            />
+
+        <ListView
+            Grid.ColumnSpan="4"
+            Grid.Column="0"
+            Grid.Row="2"
+            HasUnevenRows="True"
+            SelectionMode="None"
+            ItemTemplate="{StaticResource OperationTemplateSelector}"
+            ItemsSource="{Binding Operations}">
+        </ListView>
+    </Grid>
 </ContentPage>

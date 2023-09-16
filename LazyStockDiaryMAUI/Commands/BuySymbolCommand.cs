@@ -20,6 +20,7 @@ namespace LazyStockDiaryMAUI.Commands
                 operationInfo.Symbol = serverRegistredSymbol;
                 await ((App)Application.Current).SymbolIntegrityServiceManager.BuySymbol(operationInfo);
             }
+
             await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
         }
     }

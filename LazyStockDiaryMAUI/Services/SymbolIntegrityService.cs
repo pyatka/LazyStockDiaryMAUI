@@ -55,11 +55,13 @@ namespace LazyStockDiaryMAUI.Services
 			return await _db.GetSymbolDividends(symbol.Code, symbol.Exchange, startDate.Value, endDate.Value);
         }
 
-		public async void UpdateDividendQuantity(Symbol symbol,
+		public async Task<double> UpdateDividendQuantity(Symbol symbol,
 													int quantity,
 											  DateTime? startDate = null,
 											  DateTime? endDate = null)
 		{
+			double revenue = 0;
+
 			if (!startDate.HasValue)
 			{
 				startDate = new DateTime();
@@ -77,9 +79,12 @@ namespace LazyStockDiaryMAUI.Services
 				foreach(Dividend d in dividends)
 				{
 					d.Quantity = quantity;
+					revenue += quantity * d.Value;
 				}
 				await _db.UpdateSymbolDividend(symbol, dividends, false);
 			}
+
+			return revenue;
 		}
 
 		public async void UpdateSymbolHistoryPrice(Symbol symbol)
@@ -90,6 +95,7 @@ namespace LazyStockDiaryMAUI.Services
 			int? calculatedQuantity = null;
 			double? calculatedPrice = null;
 			DateTime? previousDate = new DateTime();
+			double dividendRevenue = 0;
 
             foreach (Operation operation in operations)
 			{
@@ -99,7 +105,7 @@ namespace LazyStockDiaryMAUI.Services
 					calculatedPrice = operation.Price;
 				} else
 				{
-                    UpdateDividendQuantity(symbol, calculatedQuantity.Value, previousDate, operation.Date);
+                    dividendRevenue += await UpdateDividendQuantity(symbol, calculatedQuantity.Value, previousDate, operation.Date);
 
                     if (operation.Type == (int)OperationType.Buy)
 					{
@@ -124,10 +130,11 @@ namespace LazyStockDiaryMAUI.Services
                 previousDate = operation.Date;
             }
 
-            UpdateDividendQuantity(symbol, calculatedQuantity.Value, previousDate);
+            dividendRevenue += await UpdateDividendQuantity(symbol, calculatedQuantity.Value, previousDate);
 
             symbol.Price = calculatedPrice;
 			symbol.Quantity = calculatedQuantity;
+			symbol.DividendRevenue = dividendRevenue;
 			await _db.UpdateSymbol(symbol);
 		}
 

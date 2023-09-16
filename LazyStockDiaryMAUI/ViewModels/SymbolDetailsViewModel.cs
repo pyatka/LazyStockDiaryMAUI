@@ -24,20 +24,18 @@ namespace LazyStockDiaryMAUI.ViewModels
             await Shell.Current.GoToAsync($"{nameof(SellSymbolPage)}?dataKey={key}");
         }
 
-        public async Task<bool> UpdateOperationsList()
+        public async void UpdateOperationsList()
         {
             Operations.Clear();
             var operations = await ((App)Application.Current).SymbolIntegrityServiceManager
                                             .GetSymbolOperations(Symbol);
             Operations = new ObservableCollection<Operation>(operations);
             OnPropertyChanged(nameof(Operations));
-            return true;
         }
 
-        public async Task<bool> UpdateDividendsList()
+        public async void UpdateDividendsList()
         {
             var dividends = await ((App)Application.Current).SymbolIntegrityServiceManager.GetSymbolDividends(Symbol);
-            return true;
         }
 
         public async void ApplyQueryAttributes(IDictionary<string, object> query)

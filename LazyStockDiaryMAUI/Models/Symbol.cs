@@ -39,6 +39,8 @@ namespace LazyStockDiaryMAUI.Models
         public int? Quantity { get; set; }
         public double? Price { get; set; }
 
+        public double? DividendRevenue { get; set; }
+
         [Ignore]
         public double PotentialRevenue
         {
@@ -46,7 +48,7 @@ namespace LazyStockDiaryMAUI.Models
             {
                 if(Quantity.HasValue && Price.HasValue)
                 {
-                    return Quantity.Value * Price.Value;
+                    return Quantity.Value * Close.Value - Quantity.Value * Price.Value;
                 } else
                 {
                     return 0;
