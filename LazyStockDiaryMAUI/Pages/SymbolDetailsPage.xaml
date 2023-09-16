@@ -26,9 +26,12 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Label
                             Grid.Column="0"
+                            Grid.ColumnSpan="2"
                             Grid.Row="0"
                             Text="Buy"
                             FontSize="Small"
@@ -37,12 +40,20 @@
                             HorizontalOptions="Start"/>
                         <Label Text="{Binding Date, StringFormat='{}{0:dd MMMM yy}'}"
                             Grid.Row="0"
-                            Grid.Column="1"
+                            Grid.Column="2"
+                            Grid.ColumnSpan="2"
                             FontSize="Small"
                             VerticalOptions="Center"
                             HorizontalOptions="End"/>
                         <Label
-                            Grid.Column="1"
+                            Grid.Column="2"
+                            Grid.Row="2"
+                            Text="{Binding Quantity}"
+                            FontSize="Medium"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"/>
+                        <Label
+                            Grid.Column="3"
                             Grid.Row="1"
                             Text="{Binding Price}"
                             FontSize="Large"
@@ -62,9 +73,12 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Label
                             Grid.Column="0"
+                            Grid.ColumnSpan="2"
                             Grid.Row="0"
                             Text="Sell"
                             FontSize="Small"
@@ -73,12 +87,20 @@
                             HorizontalOptions="Start"/>
                         <Label Text="{Binding Date, StringFormat='{}{0:dd MMMM yy}'}"
                             Grid.Row="0"
-                            Grid.Column="1"
+                            Grid.Column="2"
+                            Grid.ColumnSpan="2"
                             FontSize="Small"
                             VerticalOptions="Center"
                             HorizontalOptions="End"/>
                         <Label
-                            Grid.Column="1"
+                            Grid.Column="2"
+                            Grid.Row="2"
+                            Text="{Binding Quantity}"
+                            FontSize="Medium"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"/>
+                        <Label
+                            Grid.Column="3"
                             Grid.Row="1"
                             Text="{Binding Price}"
                             FontSize="Large"

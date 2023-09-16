@@ -66,7 +66,7 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Label Text="{Binding ChangeAbsolute, StringFormat={}{0:N2}}"
+                            <Label Text="{Binding ChangeAbsolute, StringFormat=\{0:N2\}}"
                                 Grid.Row="0"
                                 Grid.Column="1"
                                 FontSize="Micro"
@@ -98,7 +98,13 @@
                             FontSize="Micro"
                             VerticalOptions="Center"
                             HorizontalOptions="Center"/>
-                        <Label Text="{Binding PotentialRevenue, StringFormat={}{0:N2}}"
+                        <Label Text="{Binding Quantity}"
+                            Grid.Row="2"
+                            Grid.Column="2"
+                            FontSize="Micro"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"/>
+                        <Label Text="{Binding PotentialRevenue, StringFormat=\{0:N2\}}"
                             Grid.Row="2"
                             Grid.Column="3"
                             FontSize="Micro"

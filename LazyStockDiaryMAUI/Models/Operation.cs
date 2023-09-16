@@ -25,6 +25,8 @@ namespace LazyStockDiaryMAUI.Models
 		[Indexed]
 		public int SymbolId { get; set; }
 
+		public double? HistoricalPrice { get; set; }
+
 		public static Operation CreateOperation(OperationType type)
 		{
             Operation operation = new Operation();
@@ -33,11 +35,9 @@ namespace LazyStockDiaryMAUI.Models
 			return operation;
         }
 
-		public void UpdateInfo(OperationInfo operationInfo)
+		public void ConsumeHistoricalData(Symbol symbol)
 		{
-			Date = operationInfo.Date.Value;
-			Price = operationInfo.Price;
-			Quantity = operationInfo.Quantity;
-		}
+            HistoricalPrice = symbol.Price;
+        }
     }
 }
