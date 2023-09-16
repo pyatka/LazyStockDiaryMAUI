@@ -14,4 +14,10 @@ public partial class SymbolDetailsPage : ContentPage
     {
 		(BindingContext as SymbolDetailsViewModel).SellSymbol();
     }
+
+    async void PageAppearing(System.Object sender, System.EventArgs e)
+    {
+        await (BindingContext as SymbolDetailsViewModel).UpdateOperationsList();
+        await (BindingContext as SymbolDetailsViewModel).UpdateDividendsList();
+    }
 }

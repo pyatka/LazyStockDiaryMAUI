@@ -34,11 +34,16 @@ namespace LazyStockDiaryMAUI.ViewModels
             return true;
         }
 
+        public async Task<bool> UpdateDividendsList()
+        {
+            var dividends = await ((App)Application.Current).SymbolIntegrityServiceManager.GetSymbolDividends(Symbol);
+            return true;
+        }
+
         public async void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             string dataKey = HttpUtility.UrlDecode(query["dataKey"].ToString());
             Symbol = ((App)Application.Current).DataExchangeServiceManager.Pop(dataKey) as Symbol;
-            await UpdateOperationsList();
             OnPropertyChanged(nameof(Symbol));
         }
     }

@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LazyStockDiaryMAUI.SymbolDetailsPage"
              xmlns:controls="clr-namespace:LazyStockDiaryMAUI.Controls"
-             xmlns:vm="clr-namespace:LazyStockDiaryMAUI.ViewModels">
+             xmlns:vm="clr-namespace:LazyStockDiaryMAUI.ViewModels"
+             Appearing="PageAppearing">
     <ContentPage.BindingContext>
         <vm:SymbolDetailsViewModel/>
     </ContentPage.BindingContext>

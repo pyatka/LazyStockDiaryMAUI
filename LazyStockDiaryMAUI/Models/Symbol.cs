@@ -54,19 +54,24 @@ namespace LazyStockDiaryMAUI.Models
             }
         }
 
-        public void UpdateValues(Symbol dataSymbol)
+        public bool UpdateValues(Symbol dataSymbol)
         {
-            PreviousClose = dataSymbol.PreviousClose;
-            PreviousCloseDate = dataSymbol.PreviousCloseDate;
+            if(PreviousCloseDate != dataSymbol.PreviousCloseDate)
+            {
+                PreviousClose = dataSymbol.PreviousClose;
+                PreviousCloseDate = dataSymbol.PreviousCloseDate;
 
-            Open = dataSymbol.Open;
-            Close = dataSymbol.Close;
-            High = dataSymbol.High;
-            Low = dataSymbol.Low;
-            Volume = dataSymbol.Volume;
+                Open = dataSymbol.Open;
+                Close = dataSymbol.Close;
+                High = dataSymbol.High;
+                Low = dataSymbol.Low;
+                Volume = dataSymbol.Volume;
 
-            ChangeAbsolute = dataSymbol.ChangeAbsolute;
-            ChangePercent = dataSymbol.ChangePercent;
+                ChangeAbsolute = dataSymbol.ChangeAbsolute;
+                ChangePercent = dataSymbol.ChangePercent;
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -38,6 +38,23 @@ namespace LazyStockDiaryMAUI.Services
 			return await _db.GetSymbolFirstBuyDate(symbol);
 		}
 
+		public async Task<List<Dividend>> GetSymbolDividends(Symbol symbol,
+                                              DateTime? startDate = null,
+                                              DateTime? endDate = null)
+		{
+            if (!startDate.HasValue)
+            {
+                startDate = new DateTime();
+            }
+
+            if (!endDate.HasValue)
+            {
+                endDate = DateTime.Now;
+            }
+
+			return await _db.GetSymbolDividends(symbol.Code, symbol.Exchange, startDate.Value, endDate.Value);
+        }
+
 		public async void UpdateDividendQuantity(Symbol symbol,
 													int quantity,
 											  DateTime? startDate = null,
