@@ -46,15 +46,17 @@ namespace LazyStockDiaryMAUI.Platforms.Android.Services
 
         private async void updateSymbolAction(Symbol symbol)
         {
-            if(symbol.DividendLastUpdate == null && symbol.FirstBuyDate.HasValue)
+            var firstBuyDate = await symbolIntegrityService.GetSymbolFirstBuyDate(symbol);
+            if(symbol.DividendLastUpdate == null && firstBuyDate.HasValue)
             {
-                var div = await restService.GetSymbolDividend(symbol, symbol.FirstBuyDate.Value);
+                var div = await restService.GetSymbolDividend(symbol, firstBuyDate.Value);
                 await symbolIntegrityService.UpdateSymbolDividend(symbol, div);
             }
 
             var serverSymbol = await restService.GetSymbol(symbol.Code, symbol.Exchange);
             symbol.UpdateValues(serverSymbol);
-            await symbolIntegrityService.UpdateSymbol(symbol);
+            //await symbolIntegrityService.UpdateSymbol(symbol);
+            symbolIntegrityService.UpdateSymbolHistoryPrice(symbol);
         }
 
         public void UpdateSymbol(Symbol symbol)

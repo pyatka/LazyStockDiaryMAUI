@@ -33,14 +33,46 @@ namespace LazyStockDiaryMAUI.Services
 			return _db.SymbolExists(symbol.Code, symbol.Exchange);
 		}
 
+		public async Task<DateTime?> GetSymbolFirstBuyDate(Symbol symbol)
+		{
+			return await _db.GetSymbolFirstBuyDate(symbol);
+		}
+
+		public async void UpdateDividendQuantity(Symbol symbol,
+													int quantity,
+											  DateTime? startDate = null,
+											  DateTime? endDate = null)
+		{
+			if (!startDate.HasValue)
+			{
+				startDate = new DateTime();
+			}
+
+			if (!endDate.HasValue)
+			{
+				endDate = DateTime.Now;
+			}
+
+			var dividends = await _db.GetSymbolDividends(symbol.Code, symbol.Exchange, startDate.Value, endDate.Value);
+
+			if(dividends.Count > 0)
+			{
+				foreach(Dividend d in dividends)
+				{
+					d.Quantity = quantity;
+				}
+				await _db.UpdateSymbolDividend(symbol, dividends, false);
+			}
+		}
+
 		public async void UpdateSymbolHistoryPrice(Symbol symbol)
 		{
-			symbol = await _db.GetSymbol(symbol.Code, symbol.Exchange);
 			var operations = await GetSymbolOperations(symbol);
 			operations.Reverse();
 
 			int? calculatedQuantity = null;
 			double? calculatedPrice = null;
+			DateTime? previousDate = new DateTime();
 
             foreach (Operation operation in operations)
 			{
@@ -50,7 +82,9 @@ namespace LazyStockDiaryMAUI.Services
 					calculatedPrice = operation.Price;
 				} else
 				{
-					if(operation.Type == (int)OperationType.Buy)
+                    UpdateDividendQuantity(symbol, calculatedQuantity.Value, previousDate, operation.Date);
+
+                    if (operation.Type == (int)OperationType.Buy)
 					{
 						var newQuantity = calculatedQuantity + operation.Quantity;
 						calculatedPrice = (calculatedQuantity * calculatedPrice + operation.Quantity * operation.Price) / newQuantity;
@@ -59,20 +93,23 @@ namespace LazyStockDiaryMAUI.Services
 					{
 						calculatedQuantity -= operation.Quantity;
                     }
-				}
 
-				if(calculatedQuantity < 0)
-				{
-					calculatedQuantity = 0;
-				}
+                    if (calculatedQuantity < 0)
+                    {
+                        calculatedQuantity = 0;
+                    }
 
-				if(calculatedPrice < 0)
-				{
-					calculatedPrice = 0;
-				}
-			}
+                    if (calculatedPrice < 0)
+                    {
+                        calculatedPrice = 0;
+                    }
+                }
+                previousDate = operation.Date;
+            }
 
-			symbol.Price = calculatedPrice;
+            UpdateDividendQuantity(symbol, calculatedQuantity.Value, previousDate);
+
+            symbol.Price = calculatedPrice;
 			symbol.Quantity = calculatedQuantity;
 			await _db.UpdateSymbol(symbol);
 		}
@@ -117,32 +154,24 @@ namespace LazyStockDiaryMAUI.Services
 		}
 
 
-        public async Task<Symbol> BuySymbol(OperationInfo operationInfo)
+        public async Task<bool> BuySymbol(OperationInfo operationInfo)
 		{
             var symbolExists = await SymbolExists(operationInfo.Symbol);
             if (symbolExists)
 			{
 				Symbol existedSymbol = await _db.GetSymbol(operationInfo.Symbol.Code, operationInfo.Symbol.Exchange);
-                operationInfo.Symbol = existedSymbol;
-                SymbolAddOperation(operationInfo, OperationType.Buy);
 
 				var newQuantity = existedSymbol.Quantity + operationInfo.Quantity;
 				var newPrice = (existedSymbol.Price * existedSymbol.Quantity + operationInfo.Price * operationInfo.Quantity) / newQuantity;
 
 				existedSymbol.Price = newPrice;
 				existedSymbol.Quantity = newQuantity;
+                existedSymbol.DividendLastUpdate = null;
 
-				if(operationInfo.Date < existedSymbol.FirstBuyDate)
-				{
-                    existedSymbol.FirstBuyDate = operationInfo.Date;
-                    existedSymbol.DividendLastUpdate = null;
-                }
-
-				await _db.UpdateSymbol(existedSymbol);
-				return existedSymbol;
+                operationInfo.Symbol = existedSymbol;
+                SymbolAddOperation(operationInfo, OperationType.Buy);
 			} else
 			{
-                operationInfo.Symbol.FirstBuyDate = operationInfo.Date;
                 operationInfo.Symbol.DividendLastUpdate = null;
                 operationInfo.Symbol.EodLastUpdate = null;
 				operationInfo.Symbol.Id = null;
@@ -150,8 +179,8 @@ namespace LazyStockDiaryMAUI.Services
 				operationInfo.Symbol.Quantity = operationInfo.Quantity;
                 operationInfo.Symbol.Id = await _db.RegisterSymbol(operationInfo.Symbol);
                 SymbolAddOperation(operationInfo, OperationType.Buy);
-				return operationInfo.Symbol;
             }
-		}
+            return true;
+        }
 	}
 }

@@ -29,6 +29,20 @@ namespace LazyStockDiaryMAUI.Services
             await Database.CreateTableAsync<Dividend>();
         }
 
+        public async Task<DateTime?> GetSymbolFirstBuyDate(Symbol symbol)
+        {
+            if (symbol.Id.HasValue)
+            {
+                var operations = await GetSymbolOperations(symbol.Id.Value);
+                if (operations.Count > 0)
+                {
+                    return operations.Last().Date;
+                }
+            }
+
+            return null;
+        }
+
         public async Task<List<Operation>> GetSymbolOperations(int symbolId)
         {
             return await Database.Table<Operation>()
@@ -42,13 +56,19 @@ namespace LazyStockDiaryMAUI.Services
             return await Database.UpdateAsync(symbol);
         }
 
-        public async Task UpdateSymbolDividend(Symbol symbol, List<Dividend> dividends)
+        public async Task UpdateSymbolDividend(Symbol symbol, List<Dividend> dividends, bool clear = true)
         {
-            var symbolDividendQuery = Database.Table<Dividend>()
-                                              .Where(d => d.Code == symbol.Code
-                                                       && d.Exchange == symbol.Exchange);
-            await symbolDividendQuery.DeleteAsync();
-            await Database.InsertAllAsync(dividends);
+            if (clear)
+            {
+                var symbolDividendQuery = Database.Table<Dividend>()
+                                             .Where(d => d.Code == symbol.Code
+                                                      && d.Exchange == symbol.Exchange);
+                await symbolDividendQuery.DeleteAsync();
+                await Database.InsertAllAsync(dividends);
+            } else
+            {
+                await Database.UpdateAllAsync(dividends);
+            }
 
             var dbSymbol = await GetSymbol(symbol.Code, symbol.Exchange);
             dbSymbol.DividendLastUpdate = DateTime.Now;
@@ -58,6 +78,18 @@ namespace LazyStockDiaryMAUI.Services
         public async Task<List<Operation>> GetSymbolOperations(Symbol symbol)
         {
             return await Database.Table<Operation>().Where(o => o.SymbolId == symbol.Id).ToListAsync();
+        }
+
+        public async Task<List<Dividend>> GetSymbolDividends(string code,
+                                                             string exchange,
+                                                             DateTime startDate,
+                                                             DateTime endDate)
+        {
+            return await Database.Table<Dividend>().Where(d => d.Code == code
+                                                            && d.Exchange == exchange
+                                                            && d.RecordDate >= startDate
+                                                            && d.RecordDate < endDate)
+                                                   .ToListAsync();
         }
 
         public async Task<bool> SymbolExists(string code, string exchange)

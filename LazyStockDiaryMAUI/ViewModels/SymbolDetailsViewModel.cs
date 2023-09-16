@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Web;
 using System.Windows.Input;
+using Java.Nio.Channels;
 using LazyStockDiaryMAUI.Commands;
 using LazyStockDiaryMAUI.Models;
 
@@ -23,20 +24,21 @@ namespace LazyStockDiaryMAUI.ViewModels
             await Shell.Current.GoToAsync($"{nameof(SellSymbolPage)}?dataKey={key}");
         }
 
-        public async void UpdateOperationsList()
+        public async Task<bool> UpdateOperationsList()
         {
             Operations.Clear();
             var operations = await ((App)Application.Current).SymbolIntegrityServiceManager
                                             .GetSymbolOperations(Symbol);
-            operations.ForEach(o => Operations.Add(o));
+            Operations = new ObservableCollection<Operation>(operations);
             OnPropertyChanged(nameof(Operations));
+            return true;
         }
 
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        public async void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             string dataKey = HttpUtility.UrlDecode(query["dataKey"].ToString());
             Symbol = ((App)Application.Current).DataExchangeServiceManager.Pop(dataKey) as Symbol;
-            UpdateOperationsList();
+            await UpdateOperationsList();
             OnPropertyChanged(nameof(Symbol));
         }
     }

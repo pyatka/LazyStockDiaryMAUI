@@ -22,6 +22,8 @@ namespace LazyStockDiaryMAUI.Models
         public double Value { get; set; }
         public double UnadjustedValue { get; set; }
         public string Currency { get; set; }
+
+        public int? Quantity { get; set; }
     }
 }
 
